@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+// create JWT
 const createJWT = ({ payload }) => {
-  console.log(payload);
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
@@ -11,6 +11,7 @@ const createJWT = ({ payload }) => {
 
 const isTokenValid = ({ token }) => jwt.verify(token, process.env.JWT_SECRET);
 
+// attach Cookies To Response
 const attachCookiesToResponse = ({ res, user }) => {
   const token = createJWT({ payload: user });
 

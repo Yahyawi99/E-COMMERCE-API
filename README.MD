@@ -99,7 +99,7 @@
 
 #### User Routes Structure
 
-- [] add userController file
+- [x] add userController file
 - [] export (getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword) functions
 - [] res.send('some string value')
 - [] setup userRoutes file
