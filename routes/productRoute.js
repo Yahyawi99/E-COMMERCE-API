@@ -32,6 +32,4 @@ router
   .patch([authenticateUser, authorizePremissions("admin")], updateProduct)
   .delete([authenticateUser, authorizePremissions("admin")], deleteProduct);
 
-router.route("/:id");
-
 module.exports = router;

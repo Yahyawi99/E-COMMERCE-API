@@ -187,22 +187,22 @@
 - [x] export (createProduct, getAllProducts,
       getSingleProduct, updateProduct, deleteProduct, uploadImage) functions
 - [x] res.send('function name')
-- [] setup productRoutes file in routes
-- [] import all controllers
-- [] only getAllProducts and getSingleProduct accessible to public
-- [] rest only by admin (setup middlewares)
-- [] typical setup
-- [] router.route('/uploadImage').post(uploadImage)
-- [] import productRoutes as productRouter in the app.js
-- [] setup app.use('/api/v1/products', productRouter)
+- [x] setup productRoutes file in routes
+- [x] import all controllers
+- [x] only getAllProducts and getSingleProduct accessible to public
+- [x] rest only by admin (setup middlewares)
+- [x] typical setup
+- [x] router.route('/uploadImage').post(uploadImage)
+- [x] import productRoutes as productRouter in the app.js
+- [x] setup app.use('/api/v1/products', productRouter)
 
 #### Product Routes in Postman
 
 #### Create Product
 
-- [] create user property on req.body and set it equal to userId (req.user)
-- [] pass req.body into Product.create
-- [] send back the product
+- [x] create user property on req.body and set it equal to userId (req.user)
+- [x] pass req.body into Product.create
+- [x] send back the product
 
 #### Remaining Controllers (apart from uploadImage)
 
