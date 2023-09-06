@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-const { authenticateUser } = require("../middleware/authentication");
+const {
+  authenticateUser,
+  authorizePremissions,
+} = require("../middleware/authentication");
 
 const {
   getAllUsers,
@@ -11,7 +14,13 @@ const {
   updateUserPassword,
 } = require("../controllers/UserController");
 
-router.route("/").get(authenticateUser, getAllUsers);
+router
+  .route("/")
+  .get(
+    authenticateUser,
+    authorizePremissions("admin", "developer"),
+    getAllUsers
+  );
 
 router.route("/showUser").get(showCurrentUser);
 

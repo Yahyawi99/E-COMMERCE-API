@@ -3,7 +3,6 @@ const { isTokenValid } = require("../utils");
 const { StatusCodes } = require("http-status-codes");
 
 const authenticateUser = async (req, res, next) => {
-  console.log(req.signedCookies);
   const token = req.signedCookies.access_token;
 
   if (!token) {
@@ -19,4 +18,19 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticateUser };
+// Permission
+const authorizePremissions = (...roles) => {
+  return (req, res, next) => {
+    const { role } = req.user;
+
+    if (!roles.includes(role)) {
+      throw new CustomError.UnauthorizedError(
+        "Unauthorized to access this route"
+      );
+    }
+
+    next();
+  };
+};
+
+module.exports = { authenticateUser, authorizePremissions };
