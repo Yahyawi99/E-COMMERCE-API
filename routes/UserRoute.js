@@ -22,7 +22,7 @@ router.route("/showUser").get(authenticateUser, showCurrentUser);
 
 router.route("/updateUser").post(updateUser);
 
-router.route("/updateUserPassword").post(updateUserPassword);
+router.route("/updateUserPassword").patch(authenticateUser, updateUserPassword);
 
 router.route("/:id").get(authenticateUser, getSingleUser);
 
