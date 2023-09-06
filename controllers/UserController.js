@@ -1,7 +1,11 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
-const { createTokenUser, attachCookiesToResponse } = require("../utils");
+const {
+  createTokenUser,
+  attachCookiesToResponse,
+  checkPremissions,
+} = require("../utils");
 
 // All users
 const getAllUsers = async (req, res) => {
@@ -20,6 +24,8 @@ const getSingleUser = async (req, res) => {
     throw new CustomError.NotFoundError(`No user with id : ${id}`);
   }
 
+  checkPremissions(req.user, user._id);
+
   res.status(StatusCodes.OK).json({ user });
 };
 
@@ -28,19 +34,42 @@ const showCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user });
 };
 
-// update user
+// update user with findOneAndUpdate()
+// const updateUser = async (req, res) => {
+//   const { name, email } = req.body;
+//   const { userId } = req.user;
+
+//   if (!name || !email) {
+//     throw new CustomError.BadRequestError("Please provide all values");
+//   }
+
+//   const user = await User.findOneAndUpdate(
+//     { _id: userId },
+//     { email, name },
+//     { new: true, runValidators: true }
+//   );
+
+//   const tokenUser = createTokenUser(user);
+//   attachCookiesToResponse({ res, user: tokenUser });
+
+//   res.status(StatusCodes.OK).json({ user: tokenUser });
+// };
+
+// update user with user.save()
 const updateUser = async (req, res) => {
-  const { userId, name, email } = req.body;
+  const { name, email } = req.body;
+  const { userId } = req.user;
 
   if (!name || !email) {
     throw new CustomError.BadRequestError("Please provide all values");
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: userId },
-    { email, name },
-    { new: true, runValidators: true }
-  );
+  const user = await User.findOne({ _id: userId });
+
+  user.email = email;
+  user.name = name;
+
+  await user.save();
 
   const tokenUser = createTokenUser(user);
   attachCookiesToResponse({ res, user: tokenUser });
