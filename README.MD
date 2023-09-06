@@ -183,10 +183,10 @@
 
 #### Product Structure
 
-- [] add productController file in controllers
-- [] export (createProduct, getAllProducts,
-  getSingleProduct, updateProduct, deleteProduct, uploadImage) functions
-- [] res.send('function name')
+- [x] add productController file in controllers
+- [x] export (createProduct, getAllProducts,
+      getSingleProduct, updateProduct, deleteProduct, uploadImage) functions
+- [x] res.send('function name')
 - [] setup productRoutes file in routes
 - [] import all controllers
 - [] only getAllProducts and getSingleProduct accessible to public
