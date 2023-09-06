@@ -16,13 +16,9 @@ const {
 
 router
   .route("/")
-  .get(
-    authenticateUser,
-    authorizePremissions("admin", "developer"),
-    getAllUsers
-  );
+  .get(authenticateUser, authorizePremissions("admin"), getAllUsers);
 
-router.route("/showUser").get(showCurrentUser);
+router.route("/showUser").get(authenticateUser, showCurrentUser);
 
 router.route("/updateUser").post(updateUser);
 
