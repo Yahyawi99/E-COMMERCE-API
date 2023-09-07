@@ -1,3 +1,5 @@
+// Yassin@github@1999
+
 const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
@@ -36,7 +38,7 @@ const getSingleProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
 
-  const product = await Product.find0neAndUpdate({ _id: id }, req.body, {
+  const product = await Product.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
     runValidators: true,
   });
@@ -52,13 +54,13 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  const product = await Product.find0ne({ _id: id });
+  const product = await Product.findOne({ _id: id });
 
   if (!product) {
     throw new CustomError.NotFoundError(`No product with id : ${id}`);
   }
 
-  await Product.remove();
+  await product.remove();
 
   res.status(StatusCodes.OK).json({ message: "Deleted successfully!" });
 };
