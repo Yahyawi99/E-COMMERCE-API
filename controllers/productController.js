@@ -3,6 +3,7 @@
 const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
+const path = require("path");
 
 // **************************
 // create product
@@ -72,6 +73,7 @@ const uploadImage = async (req, res) => {
   }
 
   const productImage = req.files.image;
+
   if (!productImage.mimetype.startsWith("image")) {
     throw new CustomError.BadRequestError("please uploaded image!");
   }
@@ -83,7 +85,14 @@ const uploadImage = async (req, res) => {
     );
   }
 
-  res.send("image");
+  const imagePath = path.join(
+    __dirname,
+    `../public/uploads/${productImage.name}`
+  );
+
+  await productImage.mv(imagePath);
+
+  res.status(StatusCodes.OK).json({ image: `/uploads/${productImage.name}` });
 };
 
 module.exports = {
