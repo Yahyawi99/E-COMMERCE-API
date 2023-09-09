@@ -37,6 +37,7 @@ const getAllReviews = async (req, res) => {
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 
+// get single review
 const getSingleReview = async (req, res) => {
   const { id } = req.params;
 
@@ -49,10 +50,29 @@ const getSingleReview = async (req, res) => {
   res.status(StatusCodes.OK).json({ review });
 };
 
+// update review
 const updateReview = async (req, res) => {
-  res.send("update");
+  const { id } = req.params;
+  const { title, rating, comment } = req.body;
+
+  const review = await Review.findOne({ _id: id });
+
+  if (!review) {
+    throw new CustomError.NotFoundError(`No review with id :${id}`);
+  }
+
+  checkPremissions(req.user, review.user);
+
+  review.title = title;
+  review.rating = rating;
+  review.comment = comment;
+
+  await review.save();
+
+  res.status(StatusCodes.OK).json({ review });
 };
 
+// Delete review
 const deleteReview = async (req, res) => {
   const { id } = req.params;
 
