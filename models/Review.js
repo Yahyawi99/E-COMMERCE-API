@@ -1,3 +1,5 @@
+// Yassin@github@1999
+
 const mongoose = require("mongoose");
 
 const ReviewSchema = mongoose.Schema(
@@ -24,7 +26,7 @@ const ReviewSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
-    user: {
+    product: {
       Type: mongoose.Schema.ObjectId,
       ref: "Product",
       required: true,
@@ -32,5 +34,7 @@ const ReviewSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+
+ReviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
 module.export = mongoose.model("Review", ReviewSchema);
