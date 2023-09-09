@@ -18,6 +18,7 @@ const ProductSchema = mongoose.Schema(
     },
 
     image: { type: String, default: "/uploads/example.jpeg" },
+
     category: {
       type: String,
       required: [true, "Please provide a product category"],
@@ -54,6 +55,10 @@ ProductSchema.virtual("reviews", {
   foreignField: "product",
   justOne: false,
   match: { rating: 5 },
+});
+
+ProductSchema.pre("remove", async function (next) {
+  await this.model("Review").deleteMany({ product: this._id });
 });
 
 module.exports = mongoose.model("Product", ProductSchema);
