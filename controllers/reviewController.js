@@ -30,12 +30,23 @@ const createReview = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ review });
 };
 
+// Get all reviews
 const getAllReviews = async (req, res) => {
-  res.send("get all");
+  const reviews = await Review.find({});
+
+  res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
 
 const getSingleReview = async (req, res) => {
-  res.send("get one");
+  const { id } = req.params;
+
+  const review = await Review.find({ _id: id });
+
+  if (!review) {
+    throw new CustomError.NotFoundError(`No review with id :${id}`);
+  }
+
+  res.status(StatusCodes.OK).json({ review });
 };
 
 const updateReview = async (req, res) => {
