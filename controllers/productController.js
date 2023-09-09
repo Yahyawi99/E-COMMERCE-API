@@ -67,6 +67,22 @@ const deleteProduct = async (req, res) => {
 
 // upload product
 const uploadImage = async (req, res) => {
+  if (!req.files) {
+    throw new CustomError.BadRequestError("No file uploaded!");
+  }
+
+  const productImage = req.files.image;
+  if (!productImage.mimetype.startsWith("image")) {
+    throw new CustomError.BadRequestError("please uploaded image!");
+  }
+
+  const maxSize = 1024 * 1024;
+  if (productImage.size > maxSize) {
+    throw new CustomError.BadRequestError(
+      "please uploaded an image image smaller than 1MB!"
+    );
+  }
+
   res.send("image");
 };
 

@@ -7,6 +7,9 @@ mongoose.set("strictQuery", false);
 const express = require("express");
 const app = express();
 
+// file upload
+const fileUpload = require("express-fileupload");
+
 // rest of the packages
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
@@ -26,6 +29,8 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(express.static("./public"));
+app.use(fileUpload());
 
 app.get("/", (req, res) => {
   res.send("E-COMMERCE-API");
