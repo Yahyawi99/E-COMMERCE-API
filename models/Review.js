@@ -10,24 +10,28 @@ const ReviewSchema = mongoose.Schema(
       max: 5,
       required: [true, "Please provide a rating"],
     },
+
     title: {
       type: String,
       trim: true,
       maxlength: 50,
       required: [true, "Please provide a review title"],
     },
+
     comment: {
       type: String,
       maxlength: 1000,
       required: [true, "Please provide a review text"],
     },
+
     user: {
-      Type: mongoose.Schema.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
     },
+
     product: {
-      Type: mongoose.Schema.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Product",
       required: true,
     },
@@ -37,4 +41,4 @@ const ReviewSchema = mongoose.Schema(
 
 ReviewSchema.index({ product: 1, user: 1 }, { unique: true });
 
-module.export = mongoose.model("Review", ReviewSchema);
+module.exports = mongoose.model("Review", ReviewSchema);
