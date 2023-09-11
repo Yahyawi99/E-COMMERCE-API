@@ -27,6 +27,7 @@ const Register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
+//
 // LOGIN
 const Login = async (req, res) => {
   const { email, password } = req.body;
