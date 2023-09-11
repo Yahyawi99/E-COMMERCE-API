@@ -342,18 +342,18 @@
 
 #### Create Docs
 
-- [] [Docgen Library] (https://github.com/thedevsaddam/docgen)
-- [] Export Postman Collection
-- [] docgen build -i fileName.json -o index.html
-- [] create index.html in public
+- [x] [Docgen Library] (https://github.com/thedevsaddam/docgen)
+- [x] Export Postman Collection
+- [x] docgen build -i fileName.json -o index.html
+- [x] create index.html in public
 
 #### Security Packages
 
-- [] express-rate-limiter
-- [] helmet
-- [] xss-clean
-- [] express-mongo-sanitize
-- [] cors (cookies!!!!)
+- [x] express-rate-limiter
+- [x] helmet
+- [x] xss-clean
+- [x] express-mongo-sanitize
+- [x] cors (cookies!!!!)
 
 #### Deploy on Heroku
 
