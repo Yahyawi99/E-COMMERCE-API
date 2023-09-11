@@ -1,7 +1,6 @@
 require("express-async-errors");
 require("dotenv").config();
 
-const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
 const express = require("express");
@@ -42,7 +41,6 @@ app.use(xss());
 app.use(mongoSanitize());
 
 app.use(express.json());
-app.use(morgan("tiny"));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.static("./public"));
 app.use(fileUpload());
