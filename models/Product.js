@@ -44,11 +44,14 @@ const ProductSchema = mongoose.Schema(
 
     averageRating: { type: Number, default: 0 },
 
+    numOfReviews: { type: Number, default: 0 },
+
     user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
+// Virtuels
 ProductSchema.virtual("reviews", {
   ref: "Review",
   localField: "_id",
@@ -57,6 +60,7 @@ ProductSchema.virtual("reviews", {
   match: { rating: 5 },
 });
 
+// Pre
 ProductSchema.pre("remove", async function (next) {
   await this.model("Review").deleteMany({ product: this._id });
 });
