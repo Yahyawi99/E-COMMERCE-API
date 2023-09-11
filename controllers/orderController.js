@@ -10,6 +10,11 @@ const getAllOrders = async (req, res) => {
 };
 
 // create order
+const fakeStripeAPI = async ({ amount, currency }) => {
+  const clientSecret = "someRandomValue";
+  return { clientSecret, amount };
+};
+
 const createOrder = async (req, res) => {
   const { items, tax, shippingFee } = req.body;
 
@@ -51,10 +56,25 @@ const createOrder = async (req, res) => {
     subTotal += price * item.amount;
   }
 
-  console.log(orderItems);
-  console.log(subTotal);
+  //   calculate total
+  const total = subTotal + tax + shippingFee;
 
-  res.send("create order");
+  //   get client secret
+  const paymentIntent = await fakeStripeAPI({ amount: total, currency: "usd" });
+
+  const order = await Order.create({
+    orderItems,
+    total,
+    subTotal,
+    tax,
+    shippingFee,
+    clientSecret: paymentIntent.clientSecret,
+    user: req.user.userId,
+  });
+
+  res
+    .status(StatusCodes.CREATED)
+    .json({ order, clientSecret: order.clientSecret });
 };
 
 // get single order
