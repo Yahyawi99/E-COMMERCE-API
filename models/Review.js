@@ -1,5 +1,3 @@
-// Yassin@github@1999
-
 const mongoose = require("mongoose");
 
 const ReviewSchema = mongoose.Schema(
