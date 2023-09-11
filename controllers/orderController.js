@@ -6,7 +6,9 @@ const { checkPremissions } = require("../utils");
 
 // get all orders
 const getAllOrders = async (req, res) => {
-  res.send("get all");
+  const orders = await Order.find({});
+
+  res.status(StatusCodes.OK).json({ orders, count: orders.length });
 };
 
 // create order
@@ -79,7 +81,17 @@ const createOrder = async (req, res) => {
 
 // get single order
 const getSingleOrder = async (req, res) => {
-  res.send("get single");
+  const { id } = req.params;
+
+  const order = await Order.findOne({ _id: id });
+
+  if (!order) {
+    throw new CustomError.NotFoundError(`No order with id : ${id}`);
+  }
+
+  checkPremissions(req.user, order.user);
+
+  res.status(StatusCodes.OK).json({ order });
 };
 
 // get current order
@@ -89,7 +101,13 @@ const getCurrentUserOrders = async (req, res) => {
 
 // update order
 const updateOrder = async (req, res) => {
-  res.send("update order");
+  const { id } = req.params;
+
+  const order = await Order.findOne({ _id: id });
+
+  if (!order) {
+    throw new CustomError.NotFoundError(`No order with id : ${id}`);
+  }
 };
 
 module.exports = {

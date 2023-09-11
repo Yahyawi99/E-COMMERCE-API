@@ -319,12 +319,12 @@
 
 #### Create Order
 
-- [] most complex
+- [x] most complex
 
 #### Get All Orders and Get Single Order
 
-- [] getAllOrders - admin only
-- [] getSingleOrder - chechPermissions
+- [x] getAllOrders - admin only
+- [x] getSingleOrder - chechPermissions
 
 #### Get Current User Orders
 
